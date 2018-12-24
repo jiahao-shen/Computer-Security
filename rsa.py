@@ -147,7 +147,7 @@ def encryption(message, public_key):
     """Encryption
     :param message:
     :param public_key:
-    :return: C
+    :return: C = M ^ e mod n
     """
     result = fast_pow_mod(message, public_key[0], public_key[1])
     return result
@@ -157,7 +157,7 @@ def decryption(message, private_key):
     """Decryption
     :param message:
     :param private_key:
-    :return: M
+    :return: M = C ^ d mod n
     """
     result = fast_pow_mod(message, private_key[0], private_key[1])
     return result
