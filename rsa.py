@@ -165,6 +165,7 @@ def decryption(message, private_key):
 
 def transform_string_to_int(message):
     """Transform Text to Int
+    Transform String to Bytes, then to the Hex, finally to Int
     :param message: String
     :return: Int
     """
@@ -173,6 +174,7 @@ def transform_string_to_int(message):
 
 def transform_int_to_string(message):
     """Transform Int to Text
+    Transform Int to Hex, then to Bytes, finally to String
     :param message: Int
     :return: String
     """
