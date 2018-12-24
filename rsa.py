@@ -68,7 +68,7 @@ def miller_rabin(a, p):
     if fast_pow_mod(a, p - 1, p) != 1:
         return False
 
-    # decomposition p - 1 into (2 ^ k) * m
+    # Decomposition p - 1 into (2 ^ k) * m
     k = p - 1
     q = int(math.floor(math.log(k, 2)))
     m = 1
@@ -82,7 +82,7 @@ def miller_rabin(a, p):
     # Solve a ^ ((2 ^ k) * m) mod p
     tmp = fast_pow_mod(a, m, p)
     for i in range(1, q + 1):
-        # Check whether equals p - 1 or 1
+        # Check whether tmp equals p - 1 or 1
         if tmp == p - 1 or tmp == 1:
             return True
         tmp = (tmp ** 2) % p
@@ -94,9 +94,9 @@ def miller_rabin(a, p):
 
 
 def check_prime(p, k=8):
-    """Check p is prime or not
-    :param p:
-    :param k: default 8
+    """Check whether p is prime or not
+    :param p: number
+    :param k: Check times(default 8)
     :return: Boolean
     """
     if k < 0:
@@ -125,7 +125,7 @@ def generate_big_prime(length=1024):
 
 def generate_key():
     """Generate RSA KEY
-    :return: rsa_key
+    :return: rsa_key('private_key', 'public_key')
     """
     p = generate_big_prime()
     q = generate_big_prime()
