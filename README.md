@@ -9,3 +9,6 @@
 - Encryption
 - Decryption
 - Transform between text and int
+
+## MD5
+- This is incredible
