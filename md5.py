@@ -6,22 +6,20 @@
 @time: 2018-12-24 16:57:28
 @blog: https://jiahaoplus.com
 """
-import numpy as np
-
 # Initialization Constants
 A = 0x67452301
 B = 0xefcdab89
 C = 0x98badcfe
 D = 0x10325476
 
-S = np.array([[7, 12, 17, 22],
-              [5, 9, 14, 20],
-              [4, 11, 16, 23],
-              [6, 10, 15, 21]])
+S = [[7, 12, 17, 22],
+     [5, 9, 14, 20],
+     [4, 11, 16, 23],
+     [6, 10, 15, 21]]
 
 result = [A, B, C, D]
 
-convert_to_hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
+convert_to_hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
 
 
 def F(x, y, z):
@@ -75,10 +73,10 @@ def FF(a, b, c, d, x, s, ac):
     :param ac: Int
     :return: Int
     """
-    a += (F(b, c, d) & 0xFFFFFFFF) + x + ac
-    a = ((a & 0xFFFFFFFF) << s | (a & 0xFFFFFFFF) >> (32 - s))
+    a += (F(b, c, d) & 0xffffffff) + x + ac
+    a = ((a & 0xffffffff) << s | (a & 0xffffffff) >> (32 - s))
     a += b
-    return a & 0xFFFFFFFF
+    return a & 0xffffffff
 
 
 def GG(a, b, c, d, x, s, ac):
@@ -92,10 +90,10 @@ def GG(a, b, c, d, x, s, ac):
     :param ac: Int
     :return: Int
     """
-    a += (G(b, c, d) & 0xFFFFFFFF) + x + ac
-    a = ((a & 0xFFFFFFFF) << s | (a & 0xFFFFFFFF) >> (32 - s))
+    a += (G(b, c, d) & 0xffffffff) + x + ac
+    a = ((a & 0xffffffff) << s | (a & 0xffffffff) >> (32 - s))
     a += b
-    return a & 0xFFFFFFFFF
+    return a & 0xffffffff
 
 
 def HH(a, b, c, d, x, s, ac):
@@ -109,10 +107,10 @@ def HH(a, b, c, d, x, s, ac):
     :param ac: Int
     :return: Int
     """
-    a += (H(b, c, d) & 0xFFFFFFFF) + x + ac
-    a = ((a & 0xFFFFFFFF) << s | (a & 0xFFFFFFFF) >> (32 - s))
+    a += (H(b, c, d) & 0xffffffff) + x + ac
+    a = ((a & 0xffffffff) << s | (a & 0xffffffff) >> (32 - s))
     a += b
-    return a & 0xFFFFFFFFF
+    return a & 0xffffffff
 
 
 def II(a, b, c, d, x, s, ac):
@@ -126,10 +124,10 @@ def II(a, b, c, d, x, s, ac):
     :param ac: Int
     :return: Int
     """
-    a += (I(b, c, d) & 0xFFFFFFFF) + x + ac
-    a = ((a & 0xFFFFFFFF) << s | (a & 0xFFFFFFFF) >> (32 - s))
+    a += (I(b, c, d) & 0xffffffff) + x + ac
+    a = ((a & 0xffffffff) << s | (a & 0xffffffff) >> (32 - s))
     a += b
-    return a & 0xFFFFFFFFF
+    return a & 0xffffffff
 
 
 def trans(groups):
@@ -139,97 +137,97 @@ def trans(groups):
     """
     a, b, c, d = result
     # Round 1
-    a = FF(a, b, c, d, groups[0], S[0, 0], 0xd76aa478)
-    d = FF(d, a, b, c, groups[1], S[0, 1], 0xe8c7b756)
-    c = FF(c, d, a, b, groups[2], S[0, 2], 0x242070db)
-    b = FF(b, c, d, a, groups[3], S[0, 3], 0xc1bdceee)
+    a = FF(a, b, c, d, groups[0], S[0][0], 0xd76aa478)
+    d = FF(d, a, b, c, groups[1], S[0][1], 0xe8c7b756)
+    c = FF(c, d, a, b, groups[2], S[0][2], 0x242070db)
+    b = FF(b, c, d, a, groups[3], S[0][3], 0xc1bdceee)
 
-    a = FF(a, b, c, d, groups[4], S[0, 0], 0xf57c0faf)
-    d = FF(d, a, b, c, groups[5], S[0, 1], 0x4787c62a)
-    c = FF(c, d, a, b, groups[6], S[0, 2], 0xa8304613)
-    b = FF(b, c, d, a, groups[7], S[0, 3], 0xfd469501)
+    a = FF(a, b, c, d, groups[4], S[0][0], 0xf57c0faf)
+    d = FF(d, a, b, c, groups[5], S[0][1], 0x4787c62a)
+    c = FF(c, d, a, b, groups[6], S[0][2], 0xa8304613)
+    b = FF(b, c, d, a, groups[7], S[0][3], 0xfd469501)
 
-    a = FF(a, b, c, d, groups[8], S[0, 0], 0x698098d8)
-    d = FF(d, a, b, c, groups[9], S[0, 1], 0x8b44f7af)
-    c = FF(c, d, a, b, groups[10], S[0, 2], 0xffff5bb1)
-    b = FF(b, c, d, a, groups[11], S[0, 3], 0x895cd7be)
+    a = FF(a, b, c, d, groups[8], S[0][0], 0x698098d8)
+    d = FF(d, a, b, c, groups[9], S[0][1], 0x8b44f7af)
+    c = FF(c, d, a, b, groups[10], S[0][2], 0xffff5bb1)
+    b = FF(b, c, d, a, groups[11], S[0][3], 0x895cd7be)
 
-    a = FF(a, b, c, d, groups[12], S[0, 0], 0x6b901122)
-    d = FF(d, a, b, c, groups[13], S[0, 1], 0xfd987193)
-    c = FF(c, d, a, b, groups[14], S[0, 2], 0xa679438e)
-    b = FF(b, c, d, a, groups[15], S[0, 3], 0x49b40821)
+    a = FF(a, b, c, d, groups[12], S[0][0], 0x6b901122)
+    d = FF(d, a, b, c, groups[13], S[0][1], 0xfd987193)
+    c = FF(c, d, a, b, groups[14], S[0][2], 0xa679438e)
+    b = FF(b, c, d, a, groups[15], S[0][3], 0x49b40821)
 
     # Round 2
-    a = GG(a, b, c, d, groups[1], S[1, 0], 0xf61e2562)
-    d = GG(d, a, b, c, groups[6], S[1, 1], 0xc040b340)
-    c = GG(c, d, a, b, groups[11], S[1, 2], 0x265e5a51)
-    b = GG(b, c, d, a, groups[0], S[1, 3], 0xe9b6c7aa)
+    a = GG(a, b, c, d, groups[1], S[1][0], 0xf61e2562)
+    d = GG(d, a, b, c, groups[6], S[1][1], 0xc040b340)
+    c = GG(c, d, a, b, groups[11], S[1][2], 0x265e5a51)
+    b = GG(b, c, d, a, groups[0], S[1][3], 0xe9b6c7aa)
 
-    a = GG(a, b, c, d, groups[5], S[1, 0], 0xd62f105d)
-    d = GG(d, a, b, c, groups[10], S[1, 1], 0x2441453)
-    c = GG(c, d, a, b, groups[15], S[1, 2], 0xd8a1e681)
-    b = GG(b, c, d, a, groups[4], S[1, 3], 0xe7d3fbc8)
+    a = GG(a, b, c, d, groups[5], S[1][0], 0xd62f105d)
+    d = GG(d, a, b, c, groups[10], S[1][1], 0x2441453)
+    c = GG(c, d, a, b, groups[15], S[1][2], 0xd8a1e681)
+    b = GG(b, c, d, a, groups[4], S[1][3], 0xe7d3fbc8)
 
-    a = GG(a, b, c, d, groups[9], S[1, 0], 0x21e1cde6)
-    d = GG(d, a, b, c, groups[14], S[1, 1], 0xc33707d6)
-    c = GG(c, d, a, b, groups[3], S[1, 2], 0xf4d50d87)
-    b = GG(b, c, d, a, groups[8], S[1, 3], 0x455a14ed)
+    a = GG(a, b, c, d, groups[9], S[1][0], 0x21e1cde6)
+    d = GG(d, a, b, c, groups[14], S[1][1], 0xc33707d6)
+    c = GG(c, d, a, b, groups[3], S[1][2], 0xf4d50d87)
+    b = GG(b, c, d, a, groups[8], S[1][3], 0x455a14ed)
 
-    a = GG(a, b, c, d, groups[13], S[1, 0], 0xa9e3e905)
-    d = GG(d, a, b, c, groups[2], S[1, 1], 0xfcefa3f8)
-    c = GG(c, d, a, b, groups[7], S[1, 2], 0x676f02d9)
-    b = GG(b, c, d, a, groups[12], S[1, 3], 0x8d2a4c8a)
+    a = GG(a, b, c, d, groups[13], S[1][0], 0xa9e3e905)
+    d = GG(d, a, b, c, groups[2], S[1][1], 0xfcefa3f8)
+    c = GG(c, d, a, b, groups[7], S[1][2], 0x676f02d9)
+    b = GG(b, c, d, a, groups[12], S[1][3], 0x8d2a4c8a)
 
     # Round 3
-    a = HH(a, b, c, d, groups[5], S[2, 0], 0xfffa3942)
-    d = HH(d, a, b, c, groups[8], S[2, 1], 0x8771f681)
-    c = HH(c, d, a, b, groups[11], S[2, 2], 0x6d9d6122)
-    b = HH(b, c, d, a, groups[14], S[2, 3], 0xfde5380c)
+    a = HH(a, b, c, d, groups[5], S[2][0], 0xfffa3942)
+    d = HH(d, a, b, c, groups[8], S[2][1], 0x8771f681)
+    c = HH(c, d, a, b, groups[11], S[2][2], 0x6d9d6122)
+    b = HH(b, c, d, a, groups[14], S[2][3], 0xfde5380c)
 
-    a = HH(a, b, c, d, groups[1], S[2, 0], 0xa4beea44)
-    d = HH(d, a, b, c, groups[4], S[2, 1], 0x4bdecfa9)
-    c = HH(c, d, a, b, groups[7], S[2, 2], 0xf6bb4b60)
-    b = HH(b, c, d, a, groups[10], S[2, 3], 0xbebfbc70)
+    a = HH(a, b, c, d, groups[1], S[2][0], 0xa4beea44)
+    d = HH(d, a, b, c, groups[4], S[2][1], 0x4bdecfa9)
+    c = HH(c, d, a, b, groups[7], S[2][2], 0xf6bb4b60)
+    b = HH(b, c, d, a, groups[10], S[2][3], 0xbebfbc70)
 
-    a = HH(a, b, c, d, groups[13], S[2, 0], 0x289b7ec6)
-    d = HH(d, a, b, c, groups[0], S[2, 1], 0xeaa127fa)
-    c = HH(c, d, a, b, groups[3], S[2, 2], 0xd4ef3085)
-    b = HH(b, c, d, a, groups[6], S[2, 3], 0x4881d05)
+    a = HH(a, b, c, d, groups[13], S[2][0], 0x289b7ec6)
+    d = HH(d, a, b, c, groups[0], S[2][1], 0xeaa127fa)
+    c = HH(c, d, a, b, groups[3], S[2][2], 0xd4ef3085)
+    b = HH(b, c, d, a, groups[6], S[2][3], 0x4881d05)
 
-    a = HH(a, b, c, d, groups[9], S[2, 0], 0xd9d4d039)
-    d = HH(d, a, b, c, groups[12], S[2, 1], 0xe6db99e5)
-    c = HH(c, d, a, b, groups[15], S[2, 2], 0x1fa27cf8)
-    b = HH(b, c, d, a, groups[2], S[2, 3], 0xc4ac5665)
+    a = HH(a, b, c, d, groups[9], S[2][0], 0xd9d4d039)
+    d = HH(d, a, b, c, groups[12], S[2][1], 0xe6db99e5)
+    c = HH(c, d, a, b, groups[15], S[2][2], 0x1fa27cf8)
+    b = HH(b, c, d, a, groups[2], S[2][3], 0xc4ac5665)
 
     # Round 4
-    a = II(a, b, c, d, groups[0], S[3, 0], 0xf4292244)
-    d = II(d, a, b, c, groups[7], S[3, 1], 0x432aff97)
-    c = II(c, d, a, b, groups[14], S[3, 2], 0xab9423a7)
-    b = II(b, c, d, a, groups[5], S[3, 3], 0xfc93a039)
+    a = II(a, b, c, d, groups[0], S[3][0], 0xf4292244)
+    d = II(d, a, b, c, groups[7], S[3][1], 0x432aff97)
+    c = II(c, d, a, b, groups[14], S[3][2], 0xab9423a7)
+    b = II(b, c, d, a, groups[5], S[3][3], 0xfc93a039)
 
-    a = II(a, b, c, d, groups[12], S[3, 0], 0x655b59c3)
-    d = II(d, a, b, c, groups[3], S[3, 1], 0x8f0ccc92)
-    c = II(c, d, a, b, groups[10], S[3, 2], 0xffeff47d)
-    b = II(b, c, d, a, groups[1], S[3, 3], 0x85845dd1)
+    a = II(a, b, c, d, groups[12], S[3][0], 0x655b59c3)
+    d = II(d, a, b, c, groups[3], S[3][1], 0x8f0ccc92)
+    c = II(c, d, a, b, groups[10], S[3][2], 0xffeff47d)
+    b = II(b, c, d, a, groups[1], S[3][3], 0x85845dd1)
 
-    a = II(a, b, c, d, groups[8], S[3, 0], 0x6fa87e4f)
-    d = II(d, a, b, c, groups[15], S[3, 1], 0xfe2ce6e0)
-    c = II(c, d, a, b, groups[6], S[3, 2], 0xa3014314)
-    b = II(b, c, d, a, groups[13], S[3, 3], 0x4e0811a1)
+    a = II(a, b, c, d, groups[8], S[3][0], 0x6fa87e4f)
+    d = II(d, a, b, c, groups[15], S[3][1], 0xfe2ce6e0)
+    c = II(c, d, a, b, groups[6], S[3][2], 0xa3014314)
+    b = II(b, c, d, a, groups[13], S[3][3], 0x4e0811a1)
 
-    a = II(a, b, c, d, groups[4], S[3, 0], 0xf7537e82)
-    d = II(d, a, b, c, groups[11], S[3, 1], 0xbd3af235)
-    c = II(c, d, a, b, groups[2], S[3, 2], 0x2ad7d2bb)
-    b = II(b, c, d, a, groups[9], S[3, 3], 0xeb86d391)
+    a = II(a, b, c, d, groups[4], S[3][0], 0xf7537e82)
+    d = II(d, a, b, c, groups[11], S[3][1], 0xbd3af235)
+    c = II(c, d, a, b, groups[2], S[3][2], 0x2ad7d2bb)
+    b = II(b, c, d, a, groups[9], S[3][3], 0xeb86d391)
 
     result[0] += a
     result[1] += b
     result[2] += c
     result[3] += d
-    result[0] &= 0xFFFFFFFF
-    result[1] &= 0xFFFFFFFF
-    result[2] &= 0xFFFFFFFF
-    result[3] &= 0xFFFFFFFF
+    result[0] &= 0xffffffff
+    result[1] &= 0xffffffff
+    result[2] &= 0xffffffff
+    result[3] &= 0xffffffff
 
 
 def generate_md5(input_text):
@@ -330,12 +328,19 @@ def eliminate_negative(b):
 
 
 if __name__ == '__main__':
+    # d41d8cd98f00b204e9800998ecf8427e
     print('md5(\'\') =', generate_md5(''))
+    # 0cc175b9c0f1b6a831c399e269772661
     print('md5(\'a\') =', generate_md5('a'))
+    # 900150983cd24fb0d6963f7d28e17f72
     print('md5(\'abc\') =', generate_md5('abc'))
+    # f96b697d7cb7938d525a2f31aaf161d0
     print('md5(\'message digest\') =', generate_md5('message digest'))
+    # c3fcd3d76192e4007dfb496cca67e13b
     print('md5(\'abcdefghijklmnopqrstuvwxyz\') =', generate_md5('abcdefghijklmnopqrstuvwxyz'))
+    # d174ab98d277d9f5a5611c2c9f419d9f
     print('md5(\'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\') =',
           generate_md5('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'))
+    # 57edf4a22be3c955ac49da2e2107b67a
     print('md5(\'12345678901234567890123456789012345678901234567890123456789012345678901234567890\') =',
           generate_md5('12345678901234567890123456789012345678901234567890123456789012345678901234567890'))
