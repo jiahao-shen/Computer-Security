@@ -68,7 +68,7 @@ def miller_rabin(a, p):
     if fast_pow_mod(a, p - 1, p) != 1:
         return False
 
-    # Decomposition p - 1 into (2 ^ k) *t
+    # Decomposition p - 1 into (2 ^ k) * t
     k = int(math.floor(math.log(p - 1, 2)))
     t = 1
     while k > 0:
@@ -78,9 +78,9 @@ def miller_rabin(a, p):
         k = k - 1
 
     # Quadratic Detection Theorem
-    # Solve a ^ ((2 ^ k) * m) mod p
+    # Solve a ^ ((2 ^ k) * t) mod p
     tmp = fast_pow_mod(a, t, p)
-    for i in range(1, k + 1):
+    for i in range(k):
         # Check whether tmp equals p - 1 or 1
         if tmp == p - 1 or tmp == 1:
             return True
