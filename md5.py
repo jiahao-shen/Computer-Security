@@ -7,6 +7,8 @@
 @blog: https://jiahaoplus.com
 """
 # Initialization Constants
+import math
+
 A = 0x67452301
 B = 0xefcdab89
 C = 0x98badcfe
@@ -16,6 +18,9 @@ S = [[7, 12, 17, 22],
      [5, 9, 14, 20],
      [4, 11, 16, 23],
      [6, 10, 15, 21]]
+
+# [abs(sin(x)) * (2 ^ 32)]
+t = [int(hex(math.floor(abs(math.sin(i + 1)) * (2 ** 32))), 16) for i in range(64)]
 
 result = [A, B, C, D]
 
@@ -137,88 +142,88 @@ def trans(groups):
     """
     a, b, c, d = result
     # Round 1
-    a = FF(a, b, c, d, groups[0], S[0][0], 0xd76aa478)
-    d = FF(d, a, b, c, groups[1], S[0][1], 0xe8c7b756)
-    c = FF(c, d, a, b, groups[2], S[0][2], 0x242070db)
-    b = FF(b, c, d, a, groups[3], S[0][3], 0xc1bdceee)
+    a = FF(a, b, c, d, groups[0], S[0][0], t[0])
+    d = FF(d, a, b, c, groups[1], S[0][1], t[1])
+    c = FF(c, d, a, b, groups[2], S[0][2], t[2])
+    b = FF(b, c, d, a, groups[3], S[0][3], t[3])
 
-    a = FF(a, b, c, d, groups[4], S[0][0], 0xf57c0faf)
-    d = FF(d, a, b, c, groups[5], S[0][1], 0x4787c62a)
-    c = FF(c, d, a, b, groups[6], S[0][2], 0xa8304613)
-    b = FF(b, c, d, a, groups[7], S[0][3], 0xfd469501)
+    a = FF(a, b, c, d, groups[4], S[0][0], t[4])
+    d = FF(d, a, b, c, groups[5], S[0][1], t[5])
+    c = FF(c, d, a, b, groups[6], S[0][2], t[6])
+    b = FF(b, c, d, a, groups[7], S[0][3], t[7])
 
-    a = FF(a, b, c, d, groups[8], S[0][0], 0x698098d8)
-    d = FF(d, a, b, c, groups[9], S[0][1], 0x8b44f7af)
-    c = FF(c, d, a, b, groups[10], S[0][2], 0xffff5bb1)
-    b = FF(b, c, d, a, groups[11], S[0][3], 0x895cd7be)
+    a = FF(a, b, c, d, groups[8], S[0][0], t[8])
+    d = FF(d, a, b, c, groups[9], S[0][1], t[9])
+    c = FF(c, d, a, b, groups[10], S[0][2], t[10])
+    b = FF(b, c, d, a, groups[11], S[0][3], t[11])
 
-    a = FF(a, b, c, d, groups[12], S[0][0], 0x6b901122)
-    d = FF(d, a, b, c, groups[13], S[0][1], 0xfd987193)
-    c = FF(c, d, a, b, groups[14], S[0][2], 0xa679438e)
-    b = FF(b, c, d, a, groups[15], S[0][3], 0x49b40821)
+    a = FF(a, b, c, d, groups[12], S[0][0], t[12])
+    d = FF(d, a, b, c, groups[13], S[0][1], t[13])
+    c = FF(c, d, a, b, groups[14], S[0][2], t[14])
+    b = FF(b, c, d, a, groups[15], S[0][3], t[15])
 
     # Round 2
-    a = GG(a, b, c, d, groups[1], S[1][0], 0xf61e2562)
-    d = GG(d, a, b, c, groups[6], S[1][1], 0xc040b340)
-    c = GG(c, d, a, b, groups[11], S[1][2], 0x265e5a51)
-    b = GG(b, c, d, a, groups[0], S[1][3], 0xe9b6c7aa)
+    a = GG(a, b, c, d, groups[1], S[1][0], t[16])
+    d = GG(d, a, b, c, groups[6], S[1][1], t[17])
+    c = GG(c, d, a, b, groups[11], S[1][2], t[18])
+    b = GG(b, c, d, a, groups[0], S[1][3], t[19])
 
-    a = GG(a, b, c, d, groups[5], S[1][0], 0xd62f105d)
-    d = GG(d, a, b, c, groups[10], S[1][1], 0x2441453)
-    c = GG(c, d, a, b, groups[15], S[1][2], 0xd8a1e681)
-    b = GG(b, c, d, a, groups[4], S[1][3], 0xe7d3fbc8)
+    a = GG(a, b, c, d, groups[5], S[1][0], t[20])
+    d = GG(d, a, b, c, groups[10], S[1][1], t[21])
+    c = GG(c, d, a, b, groups[15], S[1][2], t[22])
+    b = GG(b, c, d, a, groups[4], S[1][3], t[23])
 
-    a = GG(a, b, c, d, groups[9], S[1][0], 0x21e1cde6)
-    d = GG(d, a, b, c, groups[14], S[1][1], 0xc33707d6)
-    c = GG(c, d, a, b, groups[3], S[1][2], 0xf4d50d87)
-    b = GG(b, c, d, a, groups[8], S[1][3], 0x455a14ed)
+    a = GG(a, b, c, d, groups[9], S[1][0], t[24])
+    d = GG(d, a, b, c, groups[14], S[1][1], t[25])
+    c = GG(c, d, a, b, groups[3], S[1][2], t[26])
+    b = GG(b, c, d, a, groups[8], S[1][3], t[27])
 
-    a = GG(a, b, c, d, groups[13], S[1][0], 0xa9e3e905)
-    d = GG(d, a, b, c, groups[2], S[1][1], 0xfcefa3f8)
-    c = GG(c, d, a, b, groups[7], S[1][2], 0x676f02d9)
-    b = GG(b, c, d, a, groups[12], S[1][3], 0x8d2a4c8a)
+    a = GG(a, b, c, d, groups[13], S[1][0], t[28])
+    d = GG(d, a, b, c, groups[2], S[1][1], t[29])
+    c = GG(c, d, a, b, groups[7], S[1][2], t[30])
+    b = GG(b, c, d, a, groups[12], S[1][3], t[31])
 
     # Round 3
-    a = HH(a, b, c, d, groups[5], S[2][0], 0xfffa3942)
-    d = HH(d, a, b, c, groups[8], S[2][1], 0x8771f681)
-    c = HH(c, d, a, b, groups[11], S[2][2], 0x6d9d6122)
-    b = HH(b, c, d, a, groups[14], S[2][3], 0xfde5380c)
+    a = HH(a, b, c, d, groups[5], S[2][0], t[32])
+    d = HH(d, a, b, c, groups[8], S[2][1], t[33])
+    c = HH(c, d, a, b, groups[11], S[2][2], t[34])
+    b = HH(b, c, d, a, groups[14], S[2][3], t[35])
 
-    a = HH(a, b, c, d, groups[1], S[2][0], 0xa4beea44)
-    d = HH(d, a, b, c, groups[4], S[2][1], 0x4bdecfa9)
-    c = HH(c, d, a, b, groups[7], S[2][2], 0xf6bb4b60)
-    b = HH(b, c, d, a, groups[10], S[2][3], 0xbebfbc70)
+    a = HH(a, b, c, d, groups[1], S[2][0], t[36])
+    d = HH(d, a, b, c, groups[4], S[2][1], t[37])
+    c = HH(c, d, a, b, groups[7], S[2][2], t[38])
+    b = HH(b, c, d, a, groups[10], S[2][3], t[39])
 
-    a = HH(a, b, c, d, groups[13], S[2][0], 0x289b7ec6)
-    d = HH(d, a, b, c, groups[0], S[2][1], 0xeaa127fa)
-    c = HH(c, d, a, b, groups[3], S[2][2], 0xd4ef3085)
-    b = HH(b, c, d, a, groups[6], S[2][3], 0x4881d05)
+    a = HH(a, b, c, d, groups[13], S[2][0], t[40])
+    d = HH(d, a, b, c, groups[0], S[2][1], t[41])
+    c = HH(c, d, a, b, groups[3], S[2][2], t[42])
+    b = HH(b, c, d, a, groups[6], S[2][3], t[43])
 
-    a = HH(a, b, c, d, groups[9], S[2][0], 0xd9d4d039)
-    d = HH(d, a, b, c, groups[12], S[2][1], 0xe6db99e5)
-    c = HH(c, d, a, b, groups[15], S[2][2], 0x1fa27cf8)
-    b = HH(b, c, d, a, groups[2], S[2][3], 0xc4ac5665)
+    a = HH(a, b, c, d, groups[9], S[2][0], t[44])
+    d = HH(d, a, b, c, groups[12], S[2][1], t[45])
+    c = HH(c, d, a, b, groups[15], S[2][2], t[46])
+    b = HH(b, c, d, a, groups[2], S[2][3], t[47])
 
     # Round 4
-    a = II(a, b, c, d, groups[0], S[3][0], 0xf4292244)
-    d = II(d, a, b, c, groups[7], S[3][1], 0x432aff97)
-    c = II(c, d, a, b, groups[14], S[3][2], 0xab9423a7)
-    b = II(b, c, d, a, groups[5], S[3][3], 0xfc93a039)
+    a = II(a, b, c, d, groups[0], S[3][0], t[48])
+    d = II(d, a, b, c, groups[7], S[3][1], t[49])
+    c = II(c, d, a, b, groups[14], S[3][2], t[50])
+    b = II(b, c, d, a, groups[5], S[3][3], t[51])
 
-    a = II(a, b, c, d, groups[12], S[3][0], 0x655b59c3)
-    d = II(d, a, b, c, groups[3], S[3][1], 0x8f0ccc92)
-    c = II(c, d, a, b, groups[10], S[3][2], 0xffeff47d)
-    b = II(b, c, d, a, groups[1], S[3][3], 0x85845dd1)
+    a = II(a, b, c, d, groups[12], S[3][0], t[52])
+    d = II(d, a, b, c, groups[3], S[3][1], t[53])
+    c = II(c, d, a, b, groups[10], S[3][2], t[54])
+    b = II(b, c, d, a, groups[1], S[3][3], t[55])
 
-    a = II(a, b, c, d, groups[8], S[3][0], 0x6fa87e4f)
-    d = II(d, a, b, c, groups[15], S[3][1], 0xfe2ce6e0)
-    c = II(c, d, a, b, groups[6], S[3][2], 0xa3014314)
-    b = II(b, c, d, a, groups[13], S[3][3], 0x4e0811a1)
+    a = II(a, b, c, d, groups[8], S[3][0], t[56])
+    d = II(d, a, b, c, groups[15], S[3][1], t[57])
+    c = II(c, d, a, b, groups[6], S[3][2], t[58])
+    b = II(b, c, d, a, groups[13], S[3][3], t[59])
 
-    a = II(a, b, c, d, groups[4], S[3][0], 0xf7537e82)
-    d = II(d, a, b, c, groups[11], S[3][1], 0xbd3af235)
-    c = II(c, d, a, b, groups[2], S[3][2], 0x2ad7d2bb)
-    b = II(b, c, d, a, groups[9], S[3][3], 0xeb86d391)
+    a = II(a, b, c, d, groups[4], S[3][0], t[60])
+    d = II(d, a, b, c, groups[11], S[3][1], t[61])
+    c = II(c, d, a, b, groups[2], S[3][2], t[62])
+    b = II(b, c, d, a, groups[9], S[3][3], t[63])
 
     result[0] += a
     result[1] += b
@@ -236,48 +241,56 @@ def generate_md5(input_text):
     :return: MD4 Hex
     """
     global result
-    result = [A, B, C, D]
+    result = [A, B, C, D]  # Initialize result
 
-    input_bytes = input_text.encode()
-    byte_len = len(input_bytes)
-    group_count = byte_len // 64
+    input_bytes = input_text.encode()  # Transform String to bytes
+    byte_len = len(input_bytes)  # Get length
+    group_count = byte_len // 64  # Get number of groups, each group 512bits(64 bytes)
 
     for i in range(group_count):
         groups = div_group(input_bytes, i * 64)
-        trans(groups)
+        trans(groups)  # Handle each group
 
-    rest = byte_len % 64
+    rest = byte_len % 64  # Get the rest message
     tmp_bytes = list(range(64))
-    if rest <= 56:
+    if rest <= 56:  # If rest <= 448bits(56 bytes)
         for i in range(rest):
-            tmp_bytes[i] = input_bytes[byte_len - rest + i]
-        if rest < 56:
-            tmp_bytes[rest] = 1 << 7
-            for i in range(1, 56 - rest):
+            tmp_bytes[i] = input_bytes[byte_len - rest + i]  # Copy the rest bits
+        if rest < 56:  # If rest < 56
+            tmp_bytes[rest] = 1 << 7  # Append 10000000
+            for i in range(1, 56 - rest):  # The rest append zero
                 tmp_bytes[rest + i] = 0
 
+        # Append the length of message
         tmp_len = byte_len << 3
         for i in range(8):
             tmp_bytes[56 + i] = tmp_len & 0xff
             tmp_len >>= 8
+
+        # Handle the rest
         groups = div_group(tmp_bytes, 0)
         trans(groups)
     else:
+        # If rest > 448bits(56 bytes)
         for i in range(rest):
-            tmp_bytes[i] = input_bytes[byte_len - rest + i]
-        tmp_bytes[rest] = 1 << 7
-        for i in range(rest + 1, 64):
+            tmp_bytes[i] = input_bytes[byte_len - rest + i]  # Copy the rest bits
+        tmp_bytes[rest] = 1 << 7  # Append 10000000
+        for i in range(rest + 1, 64):  # The rest append zero
             tmp_bytes[i] = 0
+        # Handle the first rest
         groups = div_group(tmp_bytes, 0)
         trans(groups)
 
-        for i in range(56):
+        for i in range(56):  # Continue appending zero
             tmp_bytes[i] = 0
 
+        # Append the length of message
         tmp_len = byte_len << 3
         for i in range(8):
             tmp_bytes[56 + i] = tmp_len & 0xff
             tmp_len >>= 8
+
+        # Handle the rest
         groups = div_group(tmp_bytes, 0)
         trans(groups)
 
@@ -290,13 +303,14 @@ def get_hash_hex_string():
     """
     result_string = ''
     for i in range(4):
+        # For each 32bits group, get 8 hex characters
         for j in range(4):
-            tmp = result[i] & 0x0f
-            str = convert_to_hex[tmp]
-            result[i] >>= 4
-            tmp = result[i] & 0x0f
-            result_string += convert_to_hex[tmp] + str
-            result[i] >>= 4
+            tmp = result[i] & 0x0f  # Get the last 4bits
+            str = convert_to_hex[tmp]  # Convert to hex
+            result[i] >>= 4  # Get the next last 4bits
+            tmp = result[i] & 0x0f  # Convert to hex
+            result_string += convert_to_hex[tmp] + str  # Append to result_string
+            result[i] >>= 4  # Get the next last bits
 
     return result_string
 
@@ -307,6 +321,8 @@ def div_group(input_bytes, index):
     :param index: Int
     :return: Int
     """
+    # Divide each 512bits(64 bytes) group to 16 smaller groups
+    # Each smaller groups has 32bits(4 bytes)
     tmp = list(range(16))
     for i in range(16):
         tmp[i] = (eliminate_negative(input_bytes[4 * i + index]) |
@@ -317,7 +333,7 @@ def div_group(input_bytes, index):
 
 
 def eliminate_negative(b):
-    """
+    """Eliminate the negative symbol
     :param b: Int
     :return: Int
     """
