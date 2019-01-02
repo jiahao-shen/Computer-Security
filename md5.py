@@ -235,15 +235,23 @@ def trans(groups):
     result[3] &= 0xffffffff
 
 
-def generate_md5(input_text):
+def generate_md5(input_text, input_type='string'):
     """Generate MD5
     :param input_text: String
+    :param input_type: ('string', 'file')
     :return: MD4 Hex
     """
     global result
     result = [A, B, C, D]  # Initialize result
+    input_bytes = ''
 
-    input_bytes = input_text.encode()  # Transform String to bytes
+    if input_type == 'string':  # If input is string or text
+        input_bytes = input_text.encode()  # Transform String to bytes
+    elif input_type == 'file':  # If input is file
+        file = open(input_text, 'rb')   # Read bytes
+        input_bytes = file.read()
+        file.close()
+
     byte_len = len(input_bytes)  # Get length
     group_count = byte_len // 64  # Get number of groups, each group 512bits(64 bytes)
 
@@ -360,3 +368,7 @@ if __name__ == '__main__':
     # 57edf4a22be3c955ac49da2e2107b67a
     print('md5(\'12345678901234567890123456789012345678901234567890123456789012345678901234567890\') =',
           generate_md5('12345678901234567890123456789012345678901234567890123456789012345678901234567890'))
+    # 28c73204143916e0a9492b492249d6dd
+    print('md5(\'rsa.py\') =', generate_md5('rsa.py', 'file'))
+    # 37b10ee05fb7f0a91915aa9ddf50173b
+    print('md5(\'a.out\') =', generate_md5('a.out', 'file'))
