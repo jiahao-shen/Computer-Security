@@ -312,7 +312,7 @@ def get_hash_hex_string():
     result_string = ''
     for i in range(4):
         # For each 32bits group, get 8 hex characters
-        for j in range(4):
+        for _ in range(4):
             tmp = result[i] & 0x0f  # Get the last 4bits
             str = convert_to_hex[tmp]  # Convert to hex
             result[i] >>= 4  # Get the next last 4bits
