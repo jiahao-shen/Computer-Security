@@ -29,54 +29,54 @@ convert_to_hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c
 
 def F(x, y, z):
     """F(x, y, z) = (x & y) | ((~x) & z)
-    :param x: Int
-    :param y: Int
-    :param z: Int
-    :return: Int
+    :param x: Byte
+    :param y: Byte
+    :param z: Byte
+    :return: Byte
     """
     return (x & y) | ((~x) & z)
 
 
 def G(x, y, z):
     """G(x, y, z) = (x & z) | (y & (~Z))
-    :param x: Int
-    :param y: Int
-    :param z: Int
-    :return: Int
+    :param x: Byte 
+    :param y: Byte 
+    :param z: Byte 
+    :return: Byte
     """
     return (x & z) | (y & (~z))
 
 
 def H(x, y, z):
     """H(x, y, z) = x ^ y ^ z
-    :param x: Int
-    :param y: Int
-    :param z: Int
-    :return: Int
+    :param x: Byte 
+    :param y: Byte 
+    :param z: Byte 
+    :return: Byte
     """
     return x ^ y ^ z
 
 
 def I(x, y, z):
     """I(x, y, z) = y ^ (x | (~z))
-    :param x: Int
-    :param y: Int
-    :param z: Int
-    :return: Int
+    :param x: Byte 
+    :param y: Byte 
+    :param z: Byte 
+    :return: Byte
     """
     return y ^ (x | (~z))
 
 
 def FF(a, b, c, d, x, s, ac):
     """
-    :param a: Int
-    :param b: Int
-    :param c: Int
-    :param d: Int
-    :param x: Int
-    :param s: Int
+    :param a: Byte 
+    :param b: Byte 
+    :param c: Byte 
+    :param d: Byte 
+    :param x: Byte 
+    :param s: Byte 
     :param ac: Int
-    :return: Int
+    :return: Byte
     """
     a += (F(b, c, d) & 0xffffffff) + x + ac
     a = ((a & 0xffffffff) << s | (a & 0xffffffff) >> (32 - s))
@@ -86,14 +86,14 @@ def FF(a, b, c, d, x, s, ac):
 
 def GG(a, b, c, d, x, s, ac):
     """
-    :param a: Int
-    :param b: Int
-    :param c: Int
-    :param d: Int
-    :param x: Int
-    :param s: Int
+    :param a: Byte 
+    :param b: Byte 
+    :param c: Byte 
+    :param d: Byte 
+    :param x: Byte 
+    :param s: Byte 
     :param ac: Int
-    :return: Int
+    :return: Byte
     """
     a += (G(b, c, d) & 0xffffffff) + x + ac
     a = ((a & 0xffffffff) << s | (a & 0xffffffff) >> (32 - s))
@@ -103,14 +103,14 @@ def GG(a, b, c, d, x, s, ac):
 
 def HH(a, b, c, d, x, s, ac):
     """
-    :param a: Int
-    :param b: Int
-    :param c: Int
-    :param d: Int
-    :param x: Int
-    :param s: Int
+    :param a: Byte 
+    :param b: Byte 
+    :param c: Byte 
+    :param d: Byte 
+    :param x: Byte 
+    :param s: Byte 
     :param ac: Int
-    :return: Int
+    :return: Byte
     """
     a += (H(b, c, d) & 0xffffffff) + x + ac
     a = ((a & 0xffffffff) << s | (a & 0xffffffff) >> (32 - s))
@@ -120,14 +120,14 @@ def HH(a, b, c, d, x, s, ac):
 
 def II(a, b, c, d, x, s, ac):
     """
-    :param a: Int
-    :param b: Int
-    :param c: Int
-    :param d: Int
-    :param x: Int
-    :param s: Int
+    :param a: Byte 
+    :param b: Byte 
+    :param c: Byte 
+    :param d: Byte 
+    :param x: Byte 
+    :param s: Byte 
     :param ac: Int
-    :return: Int
+    :return: Byte
     """
     a += (I(b, c, d) & 0xffffffff) + x + ac
     a = ((a & 0xffffffff) << s | (a & 0xffffffff) >> (32 - s))
@@ -137,7 +137,7 @@ def II(a, b, c, d, x, s, ac):
 
 def trans(groups):
     """
-    :param groups: Int[]
+    :param groups: Byte[]
     :return:
     """
     a, b, c, d = result
@@ -325,9 +325,9 @@ def get_hash_hex_string():
 
 def div_group(input_bytes, index):
     """
-    :param input_bytes: Int[]
+    :param input_bytes: Byte[]
     :param index: Int
-    :return: Int
+    :return: Byte[]
     """
     # Divide each 512bits(64 bytes) group to 16 smaller groups
     # Each smaller groups has 32bits(4 bytes)
@@ -342,8 +342,8 @@ def div_group(input_bytes, index):
 
 def eliminate_negative(b):
     """Eliminate the negative symbol
-    :param b: Int
-    :return: Int
+    :param b: Byte
+    :return: Byte
     """
     if b < 0:
         return b & 0x7F + 128
