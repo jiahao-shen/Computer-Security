@@ -7,7 +7,7 @@
 @blog: https://jiahaoplus.com
 """
 # Initialization Constants
-import math
+from math import floor, sin
 
 A = 0x67452301
 B = 0xefcdab89
@@ -20,7 +20,7 @@ S = [[7, 12, 17, 22],
      [6, 10, 15, 21]]
 
 # [abs(sin(x)) * (2 ^ 32)]
-t = [int(hex(math.floor(abs(math.sin(i + 1)) * (2 ** 32))), 16) for i in range(64)]
+t = [int(hex(floor(abs(sin(i + 1)) * (2 ** 32))), 16) for i in range(64)]
 
 result = [A, B, C, D]
 

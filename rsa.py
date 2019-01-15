@@ -6,8 +6,8 @@
 @time: 2018-12-24 10:14:31
 @blog: https://jiahaoplus.com
 """
-import random
-import math
+from random import randint
+from math import floor, log, gcd
 
 
 def multiplicative_inverse(a, b):
@@ -69,7 +69,7 @@ def miller_rabin(a, p):
         return False
 
     # Decomposition p - 1 into (2 ^ k) * t
-    k = int(math.floor(math.log(p - 1, 2)))
+    k = int(floor(log(p - 1, 2)))
     t = 1
     while k > 0:
         t = (p - 1) // (2 ** k)
@@ -102,7 +102,7 @@ def check_prime(p, k=8):
         k = 8
 
     while k > 0:
-        a = random.randint(1, p - 1)
+        a = randint(1, p - 1)
         if not miller_rabin(a, p):
             return False
         k = k - 1
@@ -115,7 +115,7 @@ def generate_big_prime(length=1024):
     :return:
     """
     while True:
-        num = random.randint(0, 1 << length)
+        num = randint(0, 1 << length)
         if num % 2 == 0:
             num = num + 1
         if check_prime(num):
@@ -132,8 +132,8 @@ def generate_key():
     phi = (p - 1) * (q - 1)
 
     while True:
-        e = random.randint(2, phi)
-        if math.gcd(e, phi) == 1:
+        e = randint(2, phi)
+        if gcd(e, phi) == 1:
             break
 
     d = multiplicative_inverse(e, phi)
