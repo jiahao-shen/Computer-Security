@@ -24,7 +24,10 @@ t = [int(hex(floor(abs(sin(i + 1)) * (2 ** 32))), 16) for i in range(64)]
 
 result = [A, B, C, D]
 
-convert_to_hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
+convert_to_hex = ['0', '1', '2', '3',
+                  '4', '5', '6', '7',
+                  '8', '9', 'a', 'b',
+                  'c', 'd', 'e', 'f']
 
 
 def F(x, y, z):
@@ -39,9 +42,9 @@ def F(x, y, z):
 
 def G(x, y, z):
     """G(x, y, z) = (x & z) | (y & (~Z))
-    :param x: Byte 
-    :param y: Byte 
-    :param z: Byte 
+    :param x: Byte
+    :param y: Byte
+    :param z: Byte
     :return: Byte
     """
     return (x & z) | (y & (~z))
@@ -49,9 +52,9 @@ def G(x, y, z):
 
 def H(x, y, z):
     """H(x, y, z) = x ^ y ^ z
-    :param x: Byte 
-    :param y: Byte 
-    :param z: Byte 
+    :param x: Byte
+    :param y: Byte
+    :param z: Byte
     :return: Byte
     """
     return x ^ y ^ z
@@ -59,9 +62,9 @@ def H(x, y, z):
 
 def I(x, y, z):
     """I(x, y, z) = y ^ (x | (~z))
-    :param x: Byte 
-    :param y: Byte 
-    :param z: Byte 
+    :param x: Byte
+    :param y: Byte
+    :param z: Byte
     :return: Byte
     """
     return y ^ (x | (~z))
@@ -69,12 +72,12 @@ def I(x, y, z):
 
 def FF(a, b, c, d, x, s, ac):
     """
-    :param a: Byte 
-    :param b: Byte 
-    :param c: Byte 
-    :param d: Byte 
-    :param x: Byte 
-    :param s: Byte 
+    :param a: Byte
+    :param b: Byte
+    :param c: Byte
+    :param d: Byte
+    :param x: Byte
+    :param s: Byte
     :param ac: Int
     :return: Byte
     """
@@ -86,12 +89,12 @@ def FF(a, b, c, d, x, s, ac):
 
 def GG(a, b, c, d, x, s, ac):
     """
-    :param a: Byte 
-    :param b: Byte 
-    :param c: Byte 
-    :param d: Byte 
-    :param x: Byte 
-    :param s: Byte 
+    :param a: Byte
+    :param b: Byte
+    :param c: Byte
+    :param d: Byte
+    :param x: Byte
+    :param s: Byte
     :param ac: Int
     :return: Byte
     """
@@ -103,12 +106,12 @@ def GG(a, b, c, d, x, s, ac):
 
 def HH(a, b, c, d, x, s, ac):
     """
-    :param a: Byte 
-    :param b: Byte 
-    :param c: Byte 
-    :param d: Byte 
-    :param x: Byte 
-    :param s: Byte 
+    :param a: Byte
+    :param b: Byte
+    :param c: Byte
+    :param d: Byte
+    :param x: Byte
+    :param s: Byte
     :param ac: Int
     :return: Byte
     """
@@ -120,12 +123,12 @@ def HH(a, b, c, d, x, s, ac):
 
 def II(a, b, c, d, x, s, ac):
     """
-    :param a: Byte 
-    :param b: Byte 
-    :param c: Byte 
-    :param d: Byte 
-    :param x: Byte 
-    :param s: Byte 
+    :param a: Byte
+    :param b: Byte
+    :param c: Byte
+    :param d: Byte
+    :param x: Byte
+    :param s: Byte
     :param ac: Int
     :return: Byte
     """
@@ -253,7 +256,8 @@ def generate_md5(input_text, input_type='string'):
         file.close()
 
     byte_len = len(input_bytes)  # Get length
-    group_count = byte_len // 64  # Get number of groups, each group 512bits(64 bytes)
+    # Get number of groups, each group 512bits(64 bytes)
+    group_count = byte_len // 64
 
     for i in range(group_count):
         groups = div_group(input_bytes, i * 64)
@@ -263,7 +267,8 @@ def generate_md5(input_text, input_type='string'):
     tmp_bytes = list(range(64))
     if rest <= 56:  # If rest <= 448bits(56 bytes)
         for i in range(rest):
-            tmp_bytes[i] = input_bytes[byte_len - rest + i]  # Copy the rest bits
+            # Copy the rest bits
+            tmp_bytes[i] = input_bytes[byte_len - rest + i]
         if rest < 56:  # If rest < 56
             tmp_bytes[rest] = 1 << 7  # Append 10000000
             for i in range(1, 56 - rest):  # The rest append zero
@@ -281,7 +286,8 @@ def generate_md5(input_text, input_type='string'):
     else:
         # If rest > 448bits(56 bytes)
         for i in range(rest):
-            tmp_bytes[i] = input_bytes[byte_len - rest + i]  # Copy the rest bits
+            # Copy the rest bits
+            tmp_bytes[i] = input_bytes[byte_len - rest + i]
         tmp_bytes[rest] = 1 << 7  # Append 10000000
         for i in range(rest + 1, 64):  # The rest append zero
             tmp_bytes[i] = 0
@@ -317,7 +323,8 @@ def get_hash_hex_string():
             str = convert_to_hex[tmp]  # Convert to hex
             result[i] >>= 4  # Get the next last 4bits
             tmp = result[i] & 0x0f  # Convert to hex
-            result_string += convert_to_hex[tmp] + str  # Append to result_string
+            # Append to result_string
+            result_string += convert_to_hex[tmp] + str
             result[i] >>= 4  # Get the next last bits
 
     return result_string
@@ -361,7 +368,8 @@ if __name__ == '__main__':
     # f96b697d7cb7938d525a2f31aaf161d0
     print('md5(\'message digest\') =', generate_md5('message digest'))
     # c3fcd3d76192e4007dfb496cca67e13b
-    print('md5(\'abcdefghijklmnopqrstuvwxyz\') =', generate_md5('abcdefghijklmnopqrstuvwxyz'))
+    print('md5(\'abcdefghijklmnopqrstuvwxyz\') =',
+          generate_md5('abcdefghijklmnopqrstuvwxyz'))
     # d174ab98d277d9f5a5611c2c9f419d9f
     print('md5(\'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\') =',
           generate_md5('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'))
